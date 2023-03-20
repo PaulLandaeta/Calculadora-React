@@ -11,6 +11,12 @@ function App() {
     <div className="App">
       <h1>Calculadora Científica</h1>
       <Calculadora />
+      <div className="card">
+        <h3>Información del desarrollador</h3>
+        <p>Nombre: Paul Wilker Landaeta Flores</p>
+        <p>Diplomado: FullStack</p>
+        <p>Módulo: ReactJS</p>
+      </div>
     </div>
   )
 }

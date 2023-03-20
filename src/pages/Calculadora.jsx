@@ -13,12 +13,12 @@ function Calculadora() {
         setInput("");
         setResult("");
         break;
-      case "CE":
+      case "←":
         setInput((prevInput) => prevInput.slice(0, -1));
         break;
       case "=":
         try {
-          setResult(eval(input).toString());
+          setResult(evaluate(input).toString());
         } catch {
           setResult("Error");
         }

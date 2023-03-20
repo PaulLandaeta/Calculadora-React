@@ -4,7 +4,7 @@ import Button from "./Button";
 function Keypad({ handleButtonClick }) {
   const buttonLabels = [
     "C",
-    "CE",
+    "←",
     "%",
     "/",
     "7",
