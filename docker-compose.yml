@@ -1,0 +1,8 @@
+version: "3.9"
+
+services:
+  reactapp:
+    build: .
+    image: my-react-app
+    ports:
+      - "80:80"
