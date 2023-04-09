@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Build Frontend') {
             steps {
-                sh 'cd frontend && npm install && npm run build'
+                sh 'npm install && npm run build'
             }
         }
         stage('Dockerize') {
