@@ -18,6 +18,13 @@ pipeline {
                 // Run tests for development environment
                 // If tests pass, continue to next stage
             }
+            post {
+                success {
+                    script {
+                        echo "BUILD_STATUS is ${env.BUILD_STATUS}"
+                    }
+                }
+            }
         }
         stage('Deploy to QA') {
             when {
