@@ -1,7 +1,9 @@
 pipeline {
     agent any
-    parameters {
-        choice(name: 'ENVIRONMENT', choices: ['DEV', 'QA', 'PROD'], description: 'Choose environment to deploy')
+    environment {
+        DOCKER_DEV_COMPOSE_FILE = 'docker-compose-DEV.yml'
+        DOCKER_QA_COMPOSE_FILE = 'docker-compose-qa.yml'
+        DOCKER_PROD_COMPOSE_FILE = 'docker-compose-prod.yml'
     }
     stages {
         stage('Checkout') {
@@ -14,12 +16,15 @@ pipeline {
                 sh 'npm install && npm run build'
             }
         }
-        stage('Dockerize') {
+        stage('Deploy to Development') {
+            environment {
+                DOCKER_COMPOSE_FILE = DOCKER_DEV_COMPOSE_FILE
+            }
             steps {
-                script {
-                    def dockerComposeFile = "docker-compose-${params.ENVIRONMENT}.yml"
-                    sh "docker-compose -f ${dockerComposeFile} up -d"
-                }
+                sh 'docker-compose -f ${DOCKER_COMPOSE_FILE} up -d'
+                sh 'curl http://localhost:80' // Verify service is up and running
+                // Run tests for development environment
+                // If tests pass, continue to next stage
             }
         }
     }
