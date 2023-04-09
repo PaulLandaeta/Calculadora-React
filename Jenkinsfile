@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    parameters {
+        choice(name: 'ENVIRONMENT', choices: ['DEV', 'QA', 'PROD'], description: 'Choose environment to deploy')
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -13,7 +16,10 @@ pipeline {
         }
         stage('Dockerize') {
             steps {
-                sh 'docker-compose up -d'
+                script {
+                    def dockerComposeFile = "docker-compose-${params.ENVIRONMENT}.yml"
+                    sh "docker-compose -f ${dockerComposeFile} up -d"
+                }
             }
         }
     }
