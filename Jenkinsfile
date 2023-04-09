@@ -20,9 +20,14 @@ pipeline {
             }
             post {
                 success {
-                    script {
-                        echo "BUILD_STATUS is ${env.BUILD_STATUS}"
-                    }
+                  script {
+                    env.BUILD_STATUS = 'SUCCESS'
+                  }
+                }
+                failure {
+                  script {
+                    env.BUILD_STATUS = 'FAILURE'
+                  }
                 }
             }
         }
