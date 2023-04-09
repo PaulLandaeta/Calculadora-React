@@ -21,7 +21,13 @@ pipeline {
         }
         stage('Deploy to QA') {
             when {
-                environment name: 'BUILD_STATUS', value: 'SUCCESS'
+                expression {
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+                allOf {
+                    branch 'master'
+                    environment name: 'BUILD_STATUS', value: 'SUCCESS'
+                }
             }
             steps {
                 sh 'docker-compose -f docker-compose.dev.yml up -d'
