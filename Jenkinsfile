@@ -16,23 +16,5 @@ pipeline {
                 sh 'docker-compose up -d'
             }
         }
-        stage('Push to Registry') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'mycreds', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                    sh "docker login -u $USERNAME -p $PASSWORD myregistry.com"
-                    sh 'docker push myregistry.com/myimage:latest'
-                }
-            }
-        }
-        stage('Deploy to Staging') {
-            steps {
-                sh 'ssh user@staging-server "docker-compose down && docker-compose up -d"'
-            }
-        }
-        stage('Deploy to Production') {
-            steps {
-                sh 'ssh user@production-server "docker-compose down && docker-compose up -d"'
-            }
-        }
     }
 }
