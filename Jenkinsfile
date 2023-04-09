@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Deploy to Development') {
             environment {
-                DOCKER_COMPOSE_FILE = DOCKER_DEV_COMPOSE_FILE
+                DOCKER_COMPOSE_FILE = $DOCKER_DEV_COMPOSE_FILE
             }
             steps {
                 sh 'docker-compose -f ${DOCKER_COMPOSE_FILE} up -d'
@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Deploy to QA') {
             environment {
-                DOCKER_COMPOSE_FILE = DOCKER_QA_COMPOSE_FILE
+                DOCKER_COMPOSE_FILE = $DOCKER_QA_COMPOSE_FILE
             }
             when {
                 environment name: 'BUILD_STATUS', value: 'SUCCESS'
@@ -43,7 +43,7 @@ pipeline {
         }
         stage('Deploy to Production') {
             environment {
-                DOCKER_COMPOSE_FILE = DOCKER_PROD_COMPOSE_FILE
+                DOCKER_COMPOSE_FILE = $DOCKER_PROD_COMPOSE_FILE
             }
             when {
                 environment name: 'BUILD_STATUS', value: 'SUCCESS'
