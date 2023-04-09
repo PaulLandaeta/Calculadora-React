@@ -33,19 +33,25 @@ pipeline {
         }
         stage('Deploy to QA') {
             when {
-                expression {
-                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
-                }
-                allOf {
-                    branch 'master'
-                    environment name: 'BUILD_STATUS', value: 'SUCCESS'
-                }
+                environment name: 'BUILD_STATUS', value: 'SUCCESS'
             }
             steps {
                 sh 'docker-compose -f docker-compose.dev.yml up -d'
                 sh 'curl http://localhost:8080' // Verify service is up and running
                 // Run tests for QA environment
                 // If tests pass, continue to next stage
+            }
+            post {
+                success {
+                  script {
+                    env.BUILD_STATUS = 'SUCCESS'
+                  }
+                }
+                failure {
+                  script {
+                    env.BUILD_STATUS = 'FAILURE'
+                  }
+                }
             }
         }
         stage('Deploy to Production') {
