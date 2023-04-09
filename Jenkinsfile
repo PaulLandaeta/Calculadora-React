@@ -1,9 +1,9 @@
 pipeline {
     agent any
     environment {
-        DOCKER_DEV_COMPOSE_FILE = 'docker-compose-dev.yml'
-        DOCKER_QA_COMPOSE_FILE = 'docker-compose-qa.yml'
-        DOCKER_PROD_COMPOSE_FILE = 'docker-compose-prod.yml'
+        DOCKER_DEV_COMPOSE_FILE = 'docker-compose.dev.yml'
+        DOCKER_QA_COMPOSE_FILE = 'docker-compose.qa.yml'
+        DOCKER_PROD_COMPOSE_FILE = 'docker-compose.prod.yml'
     }
     stages {
         stage('Checkout') {
