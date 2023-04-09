@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Dockerize') {
             steps {
-                sh 'docker build -t myimage:latest .'
+                sh 'docker-compose up -d'
             }
         }
         stage('Push to Registry') {
