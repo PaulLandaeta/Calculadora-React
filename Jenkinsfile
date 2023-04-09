@@ -8,6 +8,7 @@ pipeline {
         }
         stage('Build Frontend') {
             steps {
+                sh 'apt-get update && apt-get install -y npm'
                 sh 'npm install && npm run build'
             }
         }
