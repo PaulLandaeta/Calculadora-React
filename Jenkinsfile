@@ -15,7 +15,8 @@ pipeline {
             steps {
                 sh 'docker-compose -f docker-compose.dev.yml up -d'
                 sh 'curl http://host.docker.internal:80' // Verify service is up and running
-                // Run tests for development environment
+                // Run eslint to check the code
+                sh 'npm run eslint'
                 // If tests pass, continue to next stage
             }
             post {
