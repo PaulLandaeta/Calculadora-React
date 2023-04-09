@@ -38,7 +38,7 @@ pipeline {
             }
             steps {
                 sh 'docker-compose -f docker-compose.dev.yml up -d'
-                sh 'curl http://localhost:8080' // Verify service is up and running
+                sh 'curl http://localhost:80' // Verify service is up and running
                 // Run tests for QA environment
                 // If tests pass, continue to next stage
             }
@@ -60,9 +60,13 @@ pipeline {
                 environment name: 'BUILD_STATUS', value: 'SUCCESS'
             }
             steps {
-                sh 'docker-compose -f docker-compose.dev.yml up -d'
-                sh 'curl http://localhost:8080' // Verify service is up and running
-                // Run tests for production environment
+              script {
+                def server = nexusServer('nexus') // Nombre del servicio Nexus en el docker-compose
+                def dockerImage = docker.build("myimage:latest")
+                  docker.withRegistry(server.url, server.credentials) {
+                  dockerImage.push()
+                }
+              }
             }
         }
     }

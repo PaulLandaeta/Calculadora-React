@@ -17,29 +17,6 @@ services:
   #   environment:
   #     - DOCKER_HOST=tcp://localhost:2376
   #   privileged: true
-
-  sonarqube:
-    image: sonarqube:latest
-    container_name: sonarqube
-    ports:
-      - "9000:9000"
-    environment:
-      - SONARQUBE_JDBC_URL=jdbc:postgresql://sonarqube-db:5432/sonar
-      - SONARQUBE_JDBC_USERNAME=sonar
-      - SONARQUBE_JDBC_PASSWORD=sonar
-    volumes:
-      - sonarqube-data:/opt/sonarqube/data
-      - sonarqube-extensions:/opt/sonarqube/extensions
-
-  sonarqube-db:
-    image: postgres:11.3-alpine
-    container_name: sonarqube-db
-    environment:
-      - POSTGRES_USER=sonar
-      - POSTGRES_PASSWORD=sonar
-      - POSTGRES_DB=sonar
-    volumes:
-      - sonarqube-db:/var/lib/postgresql/data
   jenkins:
     build:
       context: .
@@ -55,6 +32,3 @@ services:
 volumes:
   nexus-data:
   jenkins-data:
-  sonarqube-data:
-  sonarqube-extensions:
-  sonarqube-db:
