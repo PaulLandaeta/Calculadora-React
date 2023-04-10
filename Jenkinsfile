@@ -38,7 +38,7 @@ pipeline {
             }
             steps {
                 sh 'docker-compose -f docker-compose.dev.yml up -d'
-                sh 'curl http://localhost:80' // Verify service is up and running
+                sh 'curl http://host.docker.internal:80' // Verify service is up and running
                 // Run tests for QA environment
                 // If tests pass, continue to next stage
             }
